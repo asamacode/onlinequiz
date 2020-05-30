@@ -1,0 +1,155 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Default Top Bar -->
+<div th:fragment="header-default">
+<div class="top_bar">
+	<div class="top_bar_container">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div
+						class="top_bar_content d-flex flex-row align-items-center justify-content-start">
+						<div class="top_bar_phone">
+							<span class="top_bar_title">phone:</span>+44 300 303 0266
+						</div>
+						<div class="top_bar_right ml-auto">
+
+							<!-- Language -->
+							<div class="top_bar_lang">
+								<span class="top_bar_title">site language:</span>
+								<ul class="lang_list">
+									<li class="hassubs"><a href="#">English<i
+											class="fa fa-angle-down" aria-hidden="true"></i></a>
+										<ul>
+											<li><a href="#">Ukrainian</a></li>
+											<li><a href="#">Japanese</a></li>
+											<li><a href="#">Lithuanian</a></li>
+											<li><a href="#">Swedish</a></li>
+											<li><a href="#">Italian</a></li>
+										</ul></li>
+								</ul>
+							</div>
+
+							<!-- Social -->
+							<div class="top_bar_social">
+								<span class="top_bar_title social_title">follow us</span>
+								<ul>
+									<li><a href="#"><i class="fa fa-facebook"
+											aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-instagram"
+											aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter"
+											aria-hidden="true"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Header Content -->
+<div class="header_container">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div
+					class="header_content d-flex flex-row align-items-center justify-content-start">
+					<div class="logo_container mr-auto">
+						<a href="#">
+							<div class="logo_text">Lingua</div>
+						</a>
+					</div>
+					<nav class="main_nav_contaner">
+						<ul class="main_nav">
+							<li class="active"><a href="index.html">Home</a></li>
+							<li><a href="courses.html">Courses</a></li>
+							<li><a href="instructors.html">Instructors</a></li>
+							<li><a href="#">Events</a></li>
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="contact.html">Contact</a></li>
+						</ul>
+					</nav>
+					<div class="header_content_right ml-auto text-right">
+						<div class="header_search">
+							<div class="search_form_container">
+								<form action="#" id="search_form" class="search_form trans_400">
+									<input type="search" class="header_search_input trans_400"
+										placeholder="Type for Search" required="required">
+									<div class="search_button">
+										<i class="fa fa-search" aria-hidden="true"></i>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<!-- Hamburger -->
+
+						<div class="user">
+							<a href="#"><i class="fa fa-user" aria-hidden="true"></i></a>
+						</div>
+						<div class="hamburger menu_mm">
+							<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div th:fragment="header-lecturer">
+	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Giảng viên</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
+            ><!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Settings</a><a class="dropdown-item" href="#">Activity Log</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="login.html">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+</div>
+
+<div th:fragment="header-manager">
+	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Manager</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
+            ><!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Settings</a><a class="dropdown-item" href="#">Activity Log</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="login.html">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+</div>

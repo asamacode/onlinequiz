@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:fragment="main-lecturer-fragment(title, otherStaticResources, mainContent)">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title th:replace="${title} ?: ~{}">Trang quản lý - Giảng viên</title>
+<head>
+<link th:href="@{/admin/css/styles.css}" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
+	crossorigin="anonymous"></script>
+<!-- Other javascript, css source files -->
+<th:block th:replace="${otherStaticResources} ?: ~{}"></th:block>
+
+</head>
+<body>
+
+	<div th:replace="~{/fragments/header-fragments::header-lecturer}">
+		</div>
+	
+	<div id="layoutSidenav">
+		
+		<div th:replace="~{/fragments/nav-fragments::nav-lecturer}">
+		</div>
+		
+		<div id="layoutSidenav_content" th:insert="${mainContent} ?: ~{}">
+			<div th:replace="~{/fragments/footer-fragments::footer-lecturer}">
+		</div>
+		</div>
+		
+	</div>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script th:src="@{/admin/js/scripts.js}"></script>
+</body>
+</html>

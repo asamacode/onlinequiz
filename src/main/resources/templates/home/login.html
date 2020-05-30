@@ -1,0 +1,57 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Đăng nhập</title>
+
+<th:block id="home-static-resources">
+	<link rel="stylesheet" type="text/css" href="styles/login.css">
+</th:block>
+
+</head>
+<div id="home-main-content">
+	<div class="container">
+		<h1 class="welcome text-center">
+			Welcome to <br> A SaMa Quiz
+		</h1>
+		<div class="card card-container">
+			<h2 class='login_title text-center'>Đăng nhập</h2>
+			<hr>
+			<div th:if="${message != null}"
+           th:utext="${message}" class="alert alert-danger" role="alert"></div>
+           <div th:if="${param.message != null}"
+           th:text="${param.message[0]}" class="alert alert-warning" role="alert"></div>
+			<form class="form-signin" th:action="@{/login}" th:object="${user}" method="post">
+				<span id="reauth-email" class="reauth-email"></span>
+				<p class="input_title">Tài khoản</p>
+				<input th:field="*{userId}" type="text" id="inputEmail" class="login_box"
+					placeholder="Enter your user name" required autofocus>
+				<span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></span>
+				<p class="input_title">Mật khẩu</p>
+				<input th:field="*{password}" type="password" id="inputPassword" class="login_box"
+					placeholder="Enter your password" required>
+				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+				<div class="form-group">
+					<label for="exampleFormControlSelect1">Tư cách</label> 
+					<select th:field="*{userType}" class="form-control" id="type_user">
+						<option th:value="0">Sinh viên</option>
+						<option th:value="1">Giảng viên</option>
+						<option th:value="2">Quản trị</option>
+					</select>
+					
+				</div>
+				<div id="remember" class="checkbox">
+					<label> </label>
+				</div>
+				<button class="btn btn-lg btn-primary" type="submit">Login</button>
+			</form>
+			<!-- /form -->
+		</div>
+		<!-- /card-container -->
+	</div>
+	<!-- /container -->
+</div>
+</html>
