@@ -2,7 +2,6 @@ package com.asama.onlinequiz.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,11 +12,11 @@ import javax.persistence.Table;
 @Table(name = "students")
 public class Student extends AppUser {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "class_id")
     private AppClass appClass;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student")
     private List<ResultTest> resultTests;
 
     public List<ResultTest> getResultTests() {

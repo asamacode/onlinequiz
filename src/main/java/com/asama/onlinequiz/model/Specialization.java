@@ -17,7 +17,7 @@ public class Specialization {
     @GeneratedValue
     private Long id;
 
-    @Column(columnDefinition = "nvarchar")
+    @Column(columnDefinition = "nvarchar(255)")
     private String name;
     
     @OneToMany(mappedBy = "specialization")

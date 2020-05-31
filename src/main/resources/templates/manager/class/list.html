@@ -1,0 +1,63 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-manager-layout :: main-manager-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Quản lý niên khóa - Danh sách</title>
+
+<th:block id="home-static-resources">
+
+</th:block>
+
+</head>
+<div id="home-main-content">
+	<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Tên lớp</th>
+      <th scope="col">Niên khóa</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  	<th:block th:each="n : ${classes}">
+    <tr th:attr="data-id=${n.id}">
+      <td scope="row" th:utext="${n.id}"></td>
+      <td th:utext="${n.name}"></td>
+      <td th:utext="${n.schoolYear.name}"></td>
+      <td>
+      	<a type="button" class="btn btn-primary" th:href="@{'/manager/class/update/' + ${n.id}}">
+      	Sửa</a>
+      	<a type="button" class="btn btn-danger btn-open-dialog-sc" data-toggle="modal" data-target="#mModal">Xóa</a>
+      </td>
+    </tr>
+    </th:block>
+  </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="mModal" tabindex="-1" role="dialog" aria-labelledby="#mModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<span>Bạn có chắc chắn muốn xóa ?</span>
+      	<input id="schoolid" type="hidden" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+        <button id="btn-delete-sc" type="button" class="btn btn-primary">Có</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</html>

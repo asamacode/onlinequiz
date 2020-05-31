@@ -3,7 +3,6 @@ package com.asama.onlinequiz.model;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "app_class")
@@ -23,17 +23,18 @@ public class AppClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "nvarchar")
+    @Column(columnDefinition = "nvarchar(255)")
+    @NotEmpty
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "school_year")
     private SchoolYear schoolYear;
 
-    @OneToMany(mappedBy = "appClass", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "appClass")
     private List<Student> students;
 
-    @ManyToMany(mappedBy = "appClasses", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "appClasses")
     private Set<Subject> subjects;
 
     public List<Student> getStudents() {

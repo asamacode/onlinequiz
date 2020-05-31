@@ -2,7 +2,6 @@ package com.asama.onlinequiz.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,9 +24,9 @@ public abstract class AppUser {
 
     private String password;
 
-    @Column(name = "full_name", columnDefinition = "nvarchar")
+    @Column(name = "full_name", columnDefinition = "nvarchar(255)")
     @Length(min = 10, max = 200)
-    private String fulName;
+    private String fullName;
 
     @Length(min = 9, max = 12)
     @Column(name = "indendity_num")
@@ -47,7 +46,7 @@ public abstract class AppUser {
 
     private String image;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private UserRole role;
 
@@ -75,12 +74,12 @@ public abstract class AppUser {
         this.id = id;
     }
 
-    public String getFulName() {
-        return fulName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFulName(String fulName) {
-        this.fulName = fulName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getIndendityNum() {

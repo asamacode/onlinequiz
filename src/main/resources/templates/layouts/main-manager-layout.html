@@ -8,10 +8,13 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title th:replace="${title} ?: ~{}">Trang quản lý - Manager</title>
 <head>
+<link rel="stylesheet" type="text/css" th:href="@{/styles/bootstrap4/bootstrap.min.css}">
 <link th:href="@{/admin/css/styles.css}" rel="stylesheet" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
 	crossorigin="anonymous"></script>
+	<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+	
 <!-- Other javascript, css source files -->
 <th:block th:replace="${otherStaticResources} ?: ~{}"></th:block>
 
@@ -38,5 +41,6 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
 	<script th:src="@{/admin/js/scripts.js}"></script>
+	<script th:src="@{/admin/js/admin.scripts.js}"></script>
 </body>
 </html>

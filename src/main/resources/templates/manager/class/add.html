@@ -1,0 +1,63 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-manager-layout :: main-manager-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Quản lý lớp học</title>
+
+<th:block id="home-static-resources">
+
+</th:block>
+
+</head>
+<div id="home-main-content">
+	<div class="row col-sm-12 justify-content-center p-5">
+		<div class="col-sm-6">
+			<form th:action="${app_class.id != null ? '/manager/class/update' : '/manager/class/add'}" method="post" th:object="${app_class}">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<b> Thông tin lớp học </b>
+						</h3>
+						<hr>
+			<div th:if="${message != null}"
+           th:utext="${message}" class="alert alert-danger" role="alert"></div>
+           <div th:if="${param.message != null}"
+           th:text="${param.message[0]}" class="alert alert-warning" role="alert"></div>
+						<div class="card-body">
+
+							<div class="form-group">
+								<input th:field="*{id}" type="hidden"
+									class="form-control" />
+								<label for="name">Tên lớp học:</label> 
+								<input th:field="*{name}" type="text"
+									placeholder="Nhập tên" class="form-control" id="name" />
+							</div>
+							
+							<div class="form-group">
+							    <label for="yearselect">Niên khóa</label>
+							    <select th:field="*{schoolYear.id}" class="form-control" id="yearselect">
+							      <option th:each="year : ${years}" th:value="${year.id}" th:text="${year.name}"></option>
+							    </select>
+							  </div>
+							
+						</div>
+						<div class="row justify-content-center">
+							<button type="submit" class="btn btn-info">
+								<i class="fa fa-check"></i>
+								<span th:if="${app_class.id == null}">Thêm</span> 
+								<span th:unless="${app_class.id == null}">Sửa</span> 
+							</button>
+							<a th:href="@{/manager/class/list}" class="btn btn-danger"> <i
+								class="fa fa-times"></i> Hủy
+							</a>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</html>

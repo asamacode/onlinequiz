@@ -3,7 +3,6 @@ package com.asama.onlinequiz.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +23,7 @@ public class SchoolYear {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "nvarchar")
+    @Column(columnDefinition = "nvarchar(200)")
     private String name;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -35,7 +34,7 @@ public class SchoolYear {
     @Temporal(TemporalType.DATE)
     private Date end_date;
     
-    @OneToMany(mappedBy = "schoolYear", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "schoolYear")
     private List<AppClass> classes;
 
     public Long getId() {
@@ -54,20 +53,21 @@ public class SchoolYear {
         this.name = name;
     }
 
-    public Date getStart() {
+    public Date getStart_date() {
         return start_date;
     }
 
-    public void setStart(Date start) {
-        this.start_date = start;
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
     }
 
-    public Date getEnd() {
+    public Date getEnd_date() {
         return end_date;
     }
 
-    public void setEnd(Date end) {
-        this.end_date = end;
+    public void setEnd_date(Date end_date) {
+        this.end_date = end_date;
     }
 
+    
 }

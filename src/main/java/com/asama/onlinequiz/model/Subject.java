@@ -2,7 +2,6 @@ package com.asama.onlinequiz.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,24 +22,24 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "nvarchar")
+    @Column(columnDefinition = "nvarchar(255)")
     private String name;
 
     private Integer credits;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "sepcialization_id")
     private Specialization specialization;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "class_subject", joinColumns = { @JoinColumn(name = "subject_id") }, inverseJoinColumns = {
             @JoinColumn(name = "class_id") })
     private Set<AppClass> appClasses;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subject")
     private Set<Question> questions;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "lecturer_id")
     private Lecturer lecturer;
 
