@@ -5,7 +5,7 @@
                                                 ~{::#home-static-resources},
                                                 ~{::#home-main-content} )}">
 <head>
-<title>Quản lý lớp - Danh sách</title>
+<title>Quản lý giảng viên - Danh sách</title>
 
 <th:block id="home-static-resources">
 	<script>
@@ -21,7 +21,7 @@ $(document).ready(function() {
 		var id = $("#mModal #schoolid").val();
 		
 		$.ajax({
-			url: '/manager/class/delete/'+id,
+			url: '/manager/lecturer/delete/'+id,
 			success: function(mess) {
 				$("[data-dismiss]").click();
 				location.reload();
@@ -40,20 +40,22 @@ $(document).ready(function() {
   <thead>
     <tr>
       <th scope="col">ID</th>
-      <th scope="col">Tên lớp</th>
-      <th scope="col">Niên khóa</th>
+      <th scope="col">Họ tên</th>
+      <th scope="col">Ngày sinh</th>
+      <th scope="col">Giới tính</th>
       <th></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-  	<th:block th:each="n : ${classes}">
+  	<th:block th:each="n : ${lecturers}">
     <tr th:attr="data-id=${n.id}">
       <td scope="row" th:utext="${n.id}"></td>
-      <td th:utext="${n.name}"></td>
-      <td th:utext="${n.schoolYear.name}"></td>
+      <td th:utext="${n.fullName}"></td>
+      <td th:utext="${n.dob}"></td>
+      <td th:utext="${n.sex == true?'Nam':'Nữ'}"></td>
       <td>
-      	<a type="button" class="btn btn-primary" th:href="@{'/manager/class/update/' + ${n.id}}">
+      	<a type="button" class="btn btn-primary" th:href="@{'/manager/lecturer/update/' + ${n.id}}">
       	Sửa</a>
       	<a type="button" class="btn btn-danger btn-open-dialog-sc" data-toggle="modal" data-target="#mModal">Xóa</a>
       </td>
@@ -83,4 +85,5 @@ $(document).ready(function() {
   </div>
 </div>
 </div>
+
 </html>

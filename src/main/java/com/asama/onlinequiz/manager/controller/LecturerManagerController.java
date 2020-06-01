@@ -24,18 +24,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.asama.onlinequiz.EncryptUtils;
 import com.asama.onlinequiz.model.AppClass;
-import com.asama.onlinequiz.model.Student;
+import com.asama.onlinequiz.model.Lecturer;
 import com.asama.onlinequiz.model.UserRole;
 import com.asama.onlinequiz.service.AppClassService;
-import com.asama.onlinequiz.service.StudentService;
+import com.asama.onlinequiz.service.LecturerService;
 import com.asama.onlinequiz.service.UserRoleService;
 
 @Controller
-@RequestMapping("/manager/student")
-public class StudentManagerController {
-
+@RequestMapping("/manager/lecturer")
+public class LecturerManagerController {
     @Autowired
-    StudentService studentService;
+    LecturerService lecturerService;
     
     @Autowired
     AppClassService appClassService;
@@ -49,88 +48,88 @@ public class StudentManagerController {
     @ResponseBody
     @RequestMapping("/delete/{id}")
     public String delete(Model model, @PathVariable("id") String id) {
-        Optional<Student> student = studentService.findById(id);
-        if (student.isPresent()) {
-            studentService.delete(student.get());
+        Optional<Lecturer> lecturer = lecturerService.findById(id);
+        if (lecturer.isPresent()) {
+            lecturerService.delete(lecturer.get());
             return "Xóa thành công !";
         } else {
-            return "Sinh viên này không tồn tại !";
+            return "Giảng viên này không tồn tại !";
         }
     }
     
     @PostMapping("/update")
     public String edit(RedirectAttributes re, Model model,
-            @Valid @ModelAttribute("student") Student student,
+            @Valid @ModelAttribute("lecturer") Lecturer lecturer,
             BindingResult result,
             @RequestParam("pass") String pass,
             @RequestParam("photo_file") MultipartFile file) throws IllegalStateException, IOException {
         
         if (result.hasErrors()) {
-            List<AppClass> appClasses = appClassService.findAll();
+            
             List<UserRole> roles = userRoleService.findAll();
-            model.addAttribute("app_classes", appClasses);
+            
             model.addAttribute("roles", roles);
             model.addAttribute("message", "Vui lòng nhập nội dung hợp lệ !");
-            return "manager/student/add";
+            return "manager/lecturer/add";
         }
         
         if (!file.isEmpty()) {
-            String path = app.getRealPath("/static/images/students");
-            student.setImage(student.getId() + file.getOriginalFilename());
-            File f = new File(path, student.getId()+ file.getOriginalFilename());
+            String path = app.getRealPath("/static/images/lecturers");
+            lecturer.setImage(lecturer.getId() + file.getOriginalFilename());
+            File f = new File(path, lecturer.getId()+ file.getOriginalFilename());
             file.transferTo(f);
         }
-        student.setPassword(pass);
-        studentService.update(student);
+        lecturer.setPassword(pass);
+        lecturerService.update(lecturer);
         re.addAttribute("message", "Cập nhật thành công !");
         
-        return "redirect:/manager/student/update/"+student.getId();
+        return "redirect:/manager/lecturer/update/"+lecturer.getId();
     }
     
     @GetMapping("/update/{id}")
     public String edit(Model model, @PathVariable("id") String id) {
-        Optional<Student> student = studentService.findById(id);
-        if (student.isPresent()) {
+        Optional<Lecturer> lecturer = lecturerService.findById(id);
+        if (lecturer.isPresent()) {
             List<AppClass> appClasses = appClassService.findAll();
             List<UserRole> roles = userRoleService.findAll();
             model.addAttribute("app_classes", appClasses);
             model.addAttribute("roles", roles);
-            model.addAttribute("student", student.get());
+            model.addAttribute("lecturer", lecturer.get());
         } else {
-            model.addAttribute("message", "Sinh viên này không tồn tại !");
+            model.addAttribute("message", "Giảng viên này không tồn tại !");
         }
         
-        return "manager/student/add";
+        return "manager/lecturer/add";
     }
     
     @PostMapping("/add")
     public String add(RedirectAttributes re, Model model,
-            @Valid @ModelAttribute("student") Student student,
+            @Valid @ModelAttribute("lecturer") Lecturer lecturer,
             BindingResult result,
             @RequestParam("photo_file") MultipartFile file) throws IllegalStateException, IOException {
         if (result.hasErrors()) {
-            List<AppClass> appClasses = appClassService.findAll();
+            
             List<UserRole> roles = userRoleService.findAll();
-            model.addAttribute("app_classes", appClasses);
+            
             model.addAttribute("roles", roles);
             model.addAttribute("message", "Vui lòng nhập nội dung hợp lệ !");
-            return "manager/student/add";
+            return "manager/lecturer/add";
         } 
         
         if (file.isEmpty()) {
-            student.setImage("student.png");
+            lecturer.setImage("lecturer.png");
         } else {
-            String path = app.getRealPath("/static/images/students");
-            student.setImage(student.getId() + file.getOriginalFilename());
-            File f = new File(path, student.getId()+ file.getOriginalFilename());
+            String path = app.getRealPath("/static/images/lecturers");
+            lecturer.setImage(lecturer.getId() + file.getOriginalFilename());
+            File f = new File(path, lecturer.getId()+ file.getOriginalFilename());
             file.transferTo(f);
         }
-        String pass = EncryptUtils.MD5(student.getPassword());
-        student.setPassword(pass);
-        studentService.save(student);
+        String pass = EncryptUtils.MD5(lecturer.getPassword());
+        lecturer.setPassword(pass);
+        lecturerService.save(lecturer);
         re.addAttribute("message", "Thêm thành công !");
         
-        return "redirect:/manager/student/add";
+        return "redirect:/manager/lecturer/add";
     }
     
     @GetMapping("/add")
@@ -138,15 +137,15 @@ public class StudentManagerController {
         List<AppClass> appClasses = appClassService.findAll();
         List<UserRole> roles = userRoleService.findAll();
         model.addAttribute("app_classes", appClasses);
-        model.addAttribute("student", new Student());
+        model.addAttribute("lecturer", new Lecturer());
         model.addAttribute("roles", roles);
-        return "manager/student/add";
+        return "manager/lecturer/add";
     }
     
     @RequestMapping("/list")
     public String list(Model model) {
-        List<Student> students = studentService.findAll();
-        model.addAttribute("students", students);
-        return "manager/student/list";
+        List<Lecturer> lecturers = lecturerService.findAll();
+        model.addAttribute("lecturers", lecturers);
+        return "manager/lecturer/list";
     }
 }

@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,8 +23,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 public abstract class AppUser {
 
     @Id
+    @NotBlank
+    @Length(min = 5)
     private String id;
 
+    @Length(min = 6)
     private String password;
 
     @Column(name = "full_name", columnDefinition = "nvarchar(255)")
@@ -32,16 +38,19 @@ public abstract class AppUser {
     @Column(name = "indendity_num")
     private String indendityNum;
 
+    @NotNull
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dob;
 
+    @NotNull
     private Boolean sex;
 
     @Length(min = 10, max = 11)
     private String phone;
 
-    @Column(columnDefinition = "nvarchar")
+    @Column(columnDefinition = "nvarchar(255)")
+    @NotEmpty
     private String address;
 
     private String image;

@@ -5,7 +5,7 @@
                                                 ~{::#home-static-resources},
                                                 ~{::#home-main-content} )}">
 <head>
-<title>Quản lý sinh viên</title>
+<title>Quản lý giảng viên</title>
 
 <th:block id="home-static-resources">
 	
@@ -20,12 +20,12 @@
 <div id="home-main-content">
 	<div class="row col-sm-12 justify-content-center p-5">
 		<div class="col-sm-12">
-			<form th:action="${#httpServletRequest.requestURI == '/manager/student/add' ? '/manager/student/add' : '/manager/student/update'}" 
-			method="post" th:object="${student}" enctype="multipart/form-data">
+			<form th:action="${#httpServletRequest.requestURI == '/manager/lecturer/add' ? '/manager/lecturer/add' : '/manager/lecturer/update'}" 
+			method="post" th:object="${lecturer}" enctype="multipart/form-data">
 				<div class="card">
 					<div class="card-header">
 						<h3 class="card-title text-center">
-							<b> Thông tin sinh viên </b>
+							<b> Thông tin giảng viên </b>
 						</h3>
 						<hr>
 			<div th:if="${message != null}"
@@ -37,13 +37,13 @@
 								<div class="form-group col-sm-3">
 								<label for="id">Tên đăng nhập:</label> 
 								<input th:field="*{id}" type="text"
-									placeholder="Nhập username" class="form-control" id="id" th:readonly="${#httpServletRequest.requestURI != '/manager/student/add'}"/>
+									placeholder="Nhập username" class="form-control" id="id" th:readonly="${#httpServletRequest.requestURI != '/manager/lecturer/add'}"/>
 								<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
 								</div>
 								
 								<div class="form-group col-sm-3">
 								<label for="password">Mật khẩu:</label> 
-								<input th:if="${#httpServletRequest.requestURI == '/manager/student/add'}" th:field="*{password}" type="password"
+								<input th:if="${#httpServletRequest.requestURI == '/manager/lecturer/add'}" th:field="*{password}" type="password"
 									placeholder="Nhập password" class="form-control" id="password"/>
 								<input type="hidden" name="pass"  th:value="*{password}" />
 								<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
@@ -116,12 +116,6 @@
 							
 							<div class="row">
 							
-								<div class="form-group col-sm-6">
-							    <label for="app_classes">Học lớp</label>
-							    <select th:field="*{appClass.id}" class="form-control" id="app_classes">
-							      <option th:each="cl : ${app_classes}" th:value="${cl.id}" th:text="${cl.name}"></option>
-							    </select>
-							  </div>
 							
 							<div class="form-group col-sm-6">
 							    <label for="roleselect">Vai trò</label>
@@ -136,10 +130,10 @@
 						<div class="row justify-content-center">
 							<button type="submit" class="btn btn-info">
 								<i class="fa fa-check"></i>
-								<span th:if="${#httpServletRequest.requestURI == '/manager/student/add'}">Thêm</span> 
-								<span th:unless="${#httpServletRequest.requestURI == '/manager/student/add'}">Sửa</span> 
+								<span th:if="${#httpServletRequest.requestURI == '/manager/lecturer/add'}">Thêm</span> 
+								<span th:unless="${#httpServletRequest.requestURI == '/manager/lecturer/add'}">Sửa</span> 
 							</button>
-							<a th:href="@{/manager/student/list}" class="btn btn-danger"> <i
+							<a th:href="@{/manager/lecturer/list}" class="btn btn-danger"> <i
 								class="fa fa-times"></i> Hủy
 							</a>
 						</div>
