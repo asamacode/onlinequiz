@@ -1,5 +1,6 @@
 package com.asama.onlinequiz.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,6 +13,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "tests")
@@ -28,6 +33,14 @@ public class Test {
 
     private Integer numQuestions;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date open;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date close;
+
     @ManyToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;
@@ -36,6 +49,22 @@ public class Test {
     @JoinTable(name = "test_question", joinColumns = { @JoinColumn(name = "test_id") }, inverseJoinColumns = {
             @JoinColumn(name = "question_id") })
     private Set<Question> questions;
+
+    public Date getOpen() {
+        return open;
+    }
+
+    public void setOpen(Date open) {
+        this.open = open;
+    }
+
+    public Date getClose() {
+        return close;
+    }
+
+    public void setClose(Date close) {
+        this.close = close;
+    }
 
     public Long getId() {
         return id;

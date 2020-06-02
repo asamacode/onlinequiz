@@ -1,0 +1,156 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-lecturer-layout :: main-lecturer-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Quản lý câu hỏi</title>
+
+<th:block id="home-static-resources">
+
+	<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+	rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+</th:block>
+
+</head>
+<div id="home-main-content">
+	<div class="col-md-12">
+		<form th:action="${#httpServletRequest.requestURI == '/lecturer/question/add' ? '/lecturer/question/add' : '/lecturer/question/update'}" method="post" th:object="${question}">
+
+					<div class="col-sm-12">
+						<h3 class="card-title text-center">
+							<b> Thêm câu hỏi mới </b>
+							<hr>
+							<div th:if="${message != null}" th:utext="${message}" class="alert alert-danger" role="alert"></div>
+           <div th:if="${param.message != null}" th:text="${param.message[0]}" class="alert alert-warning" role="alert"></div>
+							</h3>
+					</div>
+		
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card">
+					<div class="card-header ">
+						<h5 class="card-title">Câu hỏi</h5>
+					</div>
+					<div class="card-body ">
+						<div class="input-group mb-4">
+							<div class="form-control" style="border: none">
+								<label>
+								<b>Môn học:</b>
+								</label>
+								
+								
+								<select th:field="*{subject.id}" class="form-control" id="lecturer">
+							      <option th:each="s : ${subjects}" th:value="${s.id}" th:text="${s.name}"></option>
+							    </select>
+							    
+							</div>
+						</div>
+
+						<p class="mt-5">
+							<b> Nội dung câu hỏi </b>
+						</p>
+						<textarea th:field="*{content}" class="form-control p-2 my-2" rows="5" name="question"
+							style="max-height: 400px"></textarea>
+							<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+						<p>
+							<b>Mức độ</b>
+						</p>
+
+						<div class="input-group">
+							<div class="input-group-text"
+								style="border: none; background: none" >
+								
+								<input th:field="*{level}" type="radio" name="radLevel" class="ml-2 mr-1" 
+									aria-label="Radio button for following text input" value="0"> Dễ
+								<input th:field="*{level}" type="radio" name="radLevel" class="ml-2 mr-1" 
+									aria-label="Radio button for following text input" value="1">
+								Trung bình <input th:field="*{level}" type="radio" name="radLevel" class="ml-2 mr-1"
+									aria-label="Radio button for following text input" value="2"> Khó
+							</div>
+							<span th:if="${#fields.hasErrors('level')}" th:errors="*{level}"></span>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="card card-chart">
+					<div class="card-header">
+						<h5 class="card-title">Danh sách câu trả lời</h5>
+						<p class="card-category">Chọn 1 đáp án đúng</p>
+					</div>
+					<div class="card-body">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<div class="input-group-text">
+										<input type="hidden" th:field="*{id}" >
+										<input th:checked="*{rightAnswer == answer1}" type="radio" name="rightAnswer" class="mr-2"
+											aria-label="Radio button for following text input" value="answer1"> 
+										<input th:field="*{answer1}" type="text" class="form-control"
+											aria-label="Text input with radio button" name="answer1">
+											<span th:if="${#fields.hasErrors('answer1')}" th:errors="*{answer1}"></span>
+									</div>
+								</li>
+								<li class="nav-item">
+									<div class="input-group-text">
+										<input th:checked="*{rightAnswer == answer2}" type="radio" name="rightAnswer" class="mr-2"
+											aria-label="Radio button for following text input" value="answer2"> 
+										<input th:field="*{answer2}"
+											type="text" class="form-control"
+											aria-label="Text input with radio button" name="answer2">
+											<span th:if="${#fields.hasErrors('answer2')}" th:errors="*{answer2}"></span>
+									</div>
+								</li>
+								<li class="nav-item">
+									<div class="input-group-text">
+										<input th:checked="*{rightAnswer == answer3}" type="radio" name="rightAnswer" class="mr-2"
+											aria-label="Radio button for following text input" value="answer3"> 
+										<input th:field="*{answer3}"
+											type="text" class="form-control"
+											aria-label="Text input with radio button" name="answer3" >
+											<span th:if="${#fields.hasErrors('answer3')}" th:errors="*{answer3}"></span>
+									</div>
+								</li>
+								<li class="nav-item">
+									<div class="input-group-text">
+										<input th:checked="*{rightAnswer == answer4}" type="radio" name="rightAnswer" class="mr-2"
+											aria-label="Radio button for following text input" value="answer4"> 
+										<input th:field="*{answer4}"
+											type="text" class="form-control"
+											aria-label="Text input with radio button" name="answer4">
+									</div>
+								</li>
+							</ul>
+					</div>
+					<div class="card-footer">
+						<hr />
+						<div class="card-stats">
+							<!-- <button class="col-md-12 btn btn-success">
+								<i class="fa fa-plus"></i> Thêm câu trả lời
+							</button> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+							<button type="submit" class="btn btn-info">
+								<i class="fa fa-check"></i>
+								<span th:if="${#httpServletRequest.requestURI == '/lecturer/question/add'}">Thêm</span> 
+								<span th:unless="${#httpServletRequest.requestURI == '/lecturer/question/add'}">Sửa</span> 
+							</button>
+							<a th:href="@{/lecturer/question/list}" class="btn btn-danger"> <i
+								class="fa fa-times"></i> Hủy
+							</a>
+							</div>
+	
+</form>
+</div>
+	</div>
+</html>

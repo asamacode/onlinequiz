@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class AppClass {
     @OneToMany(mappedBy = "appClass")
     private List<Student> students;
 
-    @ManyToMany(mappedBy = "appClasses")
+    @ManyToMany(mappedBy = "appClasses", fetch = FetchType.EAGER)
     private Set<Subject> subjects;
 
     public List<Student> getStudents() {

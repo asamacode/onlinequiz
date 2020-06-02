@@ -24,6 +24,16 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
+    public Answer() {
+        super();
+    }
+
+    public Answer(String content, Question question) {
+        super();
+        this.content = content;
+        this.question = question;
+    }
+
     public Long getId() {
         return id;
     }

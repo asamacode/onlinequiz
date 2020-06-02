@@ -5,7 +5,7 @@
                                                 ~{::#home-static-resources},
                                                 ~{::#home-main-content} )}">
 <head>
-<title>Quản lý niên khóa</title>
+<title>Quản lý môn học</title>
 
 <th:block id="home-static-resources">
 
@@ -20,11 +20,11 @@
 <div id="home-main-content">
 	<div class="row col-sm-12 justify-content-center p-5">
 		<div class="col-sm-6">
-			<form th:action="${#httpServletRequest.requestURI == '/manager/schoolyear/add' ? '/manager/schoolyear/add' : '/manager/schoolyear/update'}" method="post" th:object="${schoolyear}">
+			<form th:action="${#httpServletRequest.requestURI == '/manager/subject/add' ? '/manager/subject/add' : '/manager/subject/update'}" method="post" th:object="${subject}">
 				<div class="card">
 					<div class="card-header">
 						<h3 class="card-title">
-							<b> Thông tin niên khóa </b>
+							<b> Thông tin môn học </b>
 						</h3>
 						<hr>
 			<div th:if="${message != null}"
@@ -36,34 +36,47 @@
 							<div class="form-group">
 								<input th:field="*{id}" type="hidden"
 									class="form-control" />
-								<label for="name">Tên niên khóa:</label> 
+								<label for="name">Tên môn học:</label> 
 								<input th:field="*{name}" type="text"
 									placeholder="Nhập tên" class="form-control" id="name" />
 							</div>
-							<div class="form-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
-								<label for="text">Ngày bắt đầu:</label> 
-								<input type="text" class="form-control" th:field="*{start_date}">
-								<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+							
+							<div class="form-group">
+								<label for="credits">Số tín chỉ:</label> 
+								<input th:field="*{credits}" type="number"
+									placeholder="Nhập số tín chỉ" class="form-control" id="credits" />
 							</div>
-							<div class="form-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
-								<label for="text">Ngày kết thúc:</label>
-									<input type="text" class="form-control" th:field="*{end_date}">
-								<div class="input-group-addon">
-				     	   <span class="glyphicon glyphicon-th"></span>
-				    		</div>
+							
+							<div class="row">
+							
+								<div class="form-group col-sm-6">
+							    <label for="specialization">Chuyên ngành:</label>
+							    <select th:field="*{specialization.id}" class="form-control" id="specialization">
+							      <option th:each="s : ${specializations}" th:value="${s.id}" th:text="${s.name}"></option>
+							    </select>
+							  </div>
+							  </div>
+							
+							<div class="row">
+							
+								<div class="form-group col-sm-6">
+							    <label for="lecturer">Giảng viên:</label>
+							    <select th:field="*{lecturer.id}" class="form-control" id="lecturer">
+							      <option th:each="l : ${lecturers}" th:value="${l.id}" th:text="${l.fullName}"></option>
+							    </select>
+							  </div>
+							
 							</div>
-						</div>
 						<div class="row justify-content-center">
 							<button type="submit" class="btn btn-info">
 								<i class="fa fa-check"></i>
-								<span th:if="${#httpServletRequest.requestURI == '/manager/schoolyear/add'}">Thêm</span> 
-								<span th:unless="${#httpServletRequest.requestURI == '/manager/schoolyear/add'}">Sửa</span> 
+								<span th:if="${#httpServletRequest.requestURI == '/manager/subject/add'}">Thêm</span> 
+								<span th:unless="${#httpServletRequest.requestURI == '/manager/subject/add'}">Sửa</span> 
 							</button>
-							<a th:href="@{/manager/schoolyear/list}" class="btn btn-danger"> <i
+							<a th:href="@{/manager/subject/list}" class="btn btn-danger"> <i
 								class="fa fa-times"></i> Hủy
 							</a>
+							</div>
 						</div>
 					</div>
 				</div>

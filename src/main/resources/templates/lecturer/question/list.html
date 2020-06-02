@@ -1,0 +1,103 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-lecturer-layout :: main-lecturer-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Quản lý câu hỏi - Danh sách</title>
+
+<th:block id="home-static-resources">
+	<script>
+$(document).ready(function() {
+	
+	$(".btn-open-dialog-sc").click(function() {
+		var id = $(this).closest("tr").attr("data-id");
+		$("#mModal #schoolid").val(id);
+	});
+	
+	$("#btn-delete-sc").click(function() {
+		
+		var id = $("#mModal #schoolid").val();
+		
+		$.ajax({
+			url: '/lecturer/question/delete/'+id,
+			success: function(mess) {
+				$("[data-dismiss]").click();
+				location.reload();
+				alert(mess);
+			}
+		});
+	});
+	
+});
+</script>
+</th:block>
+
+</head>
+<div id="home-main-content">
+	<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Câu hỏi</th>
+      <th scope="col">Câu trả lời</th>
+      <th scope="col">Đáp án</th>
+      <th scope="col">Giảng viên</th>
+      <th scope="col">Môn học</th>
+      <th scope="col">Mức độ</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  	<th:block th:each="n : ${questions}">
+    <tr th:attr="data-id=${n.id}">
+      <td scope="row" th:utext="${n.id}"></td>
+      <td th:utext="${n.content}"></td>
+      <td>
+	      <th:block th:each="ans : ${n.answers}">
+	      	- <span th:utext="${ans.content}"></span><br>
+	      </th:block>
+      </td>
+      <td th:utext="${n.rightAnswer?.content}"></td>
+      <td th:utext="${n.lecturer?.fullName}"></td>
+      <td th:utext="${n.subject.name}"></td>
+      <th:block th:switch="${n.level}">
+      	<td th:case="0">Dễ</td>
+      	<td th:case="1">Trung bình</td>
+      	<td th:case="2">Khó</td>
+      </th:block>
+      <td>
+      	<a type="button" class="btn btn-primary" th:href="@{'/lecturer/question/update/' + ${n.id}}">
+      	Sửa</a>
+      	<a type="button" class="btn btn-danger btn-open-dialog-sc" data-toggle="modal" data-target="#mModal">Xóa</a>
+      </td>
+    </tr>
+    </th:block>
+  </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="mModal" tabindex="-1" role="dialog" aria-labelledby="#mModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<span>Bạn có chắc chắn muốn xóa ?</span>
+      	<input id="schoolid" type="hidden" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+        <button id="btn-delete-sc" type="button" class="btn btn-primary">Có</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</html>

@@ -15,7 +15,7 @@
 <div id="home-main-content">
 	<div class="row col-sm-12 justify-content-center p-5">
 		<div class="col-sm-6">
-			<form th:action="${app_class.id != null ? '/manager/class/update' : '/manager/class/add'}" method="post" th:object="${app_class}">
+			<form th:action="${#httpServletRequest.requestURI == '/manager/app_class/add' ? '/manager/class/add' : '/manager/class/update'}" method="post" th:object="${app_class}">
 				<div class="card">
 					<div class="card-header">
 						<h3 class="card-title">
@@ -47,8 +47,8 @@
 						<div class="row justify-content-center">
 							<button type="submit" class="btn btn-info">
 								<i class="fa fa-check"></i>
-								<span th:if="${app_class.id == null}">Thêm</span> 
-								<span th:unless="${app_class.id == null}">Sửa</span> 
+								<span th:if="${#httpServletRequest.requestURI == '/manager/app_class/add'}">Thêm</span> 
+								<span th:unless="${#httpServletRequest.requestURI == '/manager/app_class/add'}">Sửa</span> 
 							</button>
 							<a th:href="@{/manager/class/list}" class="btn btn-danger"> <i
 								class="fa fa-times"></i> Hủy

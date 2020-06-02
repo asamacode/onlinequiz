@@ -64,7 +64,7 @@ public class HomeController {
         case 1:
             Optional<Lecturer> lecturer = lecturerService.findByIdAndPass(user.getUserId(), user.getPassword());
             if (lecturer.isPresent()) {
-                session.setAttribute("user", lecturer);
+                session.setAttribute("user", lecturer.get());
                 return "redirect:/lecturer/home";
             } else {
                 model.addAttribute("message", "Tài khoản hoặc mật khẩu không chính xác !");
@@ -73,7 +73,7 @@ public class HomeController {
         case 2:
             Optional<Manager> manager = managerService.findByIdAndPass(user.getUserId(), user.getPassword());
             if (manager.isPresent()) {
-                session.setAttribute("user", manager);
+                session.setAttribute("user", manager.get());
                 return "redirect:/manager/home";
             } else {
                 model.addAttribute("message", "Tài khoản hoặc mật khẩu không chính xác !");
@@ -82,7 +82,7 @@ public class HomeController {
         default:
             Optional<Student> student = studentService.findByIdAndPass(user.getUserId(), user.getPassword());
             if (student.isPresent()) {
-                session.setAttribute("user", student);
+                session.setAttribute("user", student.get());
                 return "redirect:/home";
             } else {
                 model.addAttribute("message", "Tài khoản hoặc mật khẩu không chính xác !");
