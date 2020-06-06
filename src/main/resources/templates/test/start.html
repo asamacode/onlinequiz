@@ -1,0 +1,46 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Làm bài thi</title>
+
+<th:block id="home-static-resources">
+	
+</th:block>
+
+</head>
+<div id="home-main-content">
+<div class="home">
+	<div class="home_background" style="background-image: url(images/index_background.jpg);"></div>
+	<div class="home_content">
+		<div class="container">
+			<div class="row">
+				<div class="col text-center">
+					<h1 class="home_title">Xác nhận làm bài thi</h1>
+					<div class="intro-para text-center quote">
+							
+								<p class="big-text">Môn:
+									<span th:utext="${ts.subject.name}"></span></p>
+								<p class="small-text">Gồm có <span th:utext="${ts.qsEasy + ts.qsNormal + ts.qsHard}"></span> câu hỏi và
+									câu trả lời. Nếu bạn trả lời đúng thì bạn được 0.5đ. Nếu làm
+									full sẽ được 10 điểm. Chọn một câu trả lời đúng.</p>
+								<!-- <p class="big-text">Danh sách đề thi</p> -->
+								
+				
+
+						</div>
+					<div class="home_button trans_200">
+						<a th:href="@{/dotest}" class="btn get-quote">
+									Bắt đầu
+									</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</html>

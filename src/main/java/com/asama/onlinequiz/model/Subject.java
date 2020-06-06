@@ -1,6 +1,7 @@
 package com.asama.onlinequiz.model;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "subjects")
@@ -27,28 +30,40 @@ public class Subject {
 
     private Integer credits;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sepcialization_id")
     private Specialization specialization;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "class_subject", joinColumns = { @JoinColumn(name = "subject_id") }, inverseJoinColumns = {
             @JoinColumn(name = "class_id") })
-    private Set<AppClass> appClasses;
+    private List<AppClass> appClasses = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "subject")
-    private Set<Question> questions;
+    private List<Question> questions = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "lecturer_id")
     private Lecturer lecturer;
 
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Set<Question> questions) {
+    public List<AppClass> getAppClasses() {
+        return appClasses;
+    }
+
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public void setAppClasses(List<AppClass> appClasses) {
+        this.appClasses = appClasses;
     }
 
     public Lecturer getLecturer() {
@@ -89,14 +104,6 @@ public class Subject {
 
     public void setSpecialization(Specialization specialization) {
         this.specialization = specialization;
-    }
-
-    public Set<AppClass> getAppClasses() {
-        return appClasses;
-    }
-
-    public void setAppClasses(Set<AppClass> appClasses) {
-        this.appClasses = appClasses;
     }
 
 }

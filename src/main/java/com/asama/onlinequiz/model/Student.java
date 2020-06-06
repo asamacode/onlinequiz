@@ -3,6 +3,7 @@ package com.asama.onlinequiz.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "students")
 public class Student extends AppUser {
 
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.EAGER)
     @JoinColumn(name = "class_id")
     private AppClass appClass;
 

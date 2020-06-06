@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.asama.onlinequiz.model.Student;
 import com.asama.onlinequiz.model.Test;
 import com.asama.onlinequiz.repository.TestRepository;
 
@@ -38,6 +39,11 @@ public class TestServiceImpl implements TestService {
     @Override
     public void delete(Test test) {
         testRepository.delete(test);
+    }
+
+    @Override
+    public List<Test> findAllListTestByStudent(Student student) {
+        return testRepository.findListTestStudentId(student.getAppClass().getId());
     }
 
 }

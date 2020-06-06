@@ -18,4 +18,12 @@ public interface QuestionService {
     List<Question> findAllByLecturerId(String id);
 
     void delete(Question question);
+
+    List<Question> findAllBySubjectIdDif(Long subId, Integer dif);
+
+    List<Question> findAllBySubjectIdNor(Long subId, Integer nor);
+
+    List<Question> findAllBySubjectIdEasy(Long subId, Integer easy);
+
+    List<Question> searchByKeyAndSubject(String key, Long subId);
 }

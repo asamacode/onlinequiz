@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "questions")
@@ -35,23 +38,39 @@ public class Question {
 
     private String image;
 
+    @Transient
+    private Boolean isTicked;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Answer> answers;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "right_answer")
     private Answer rightAnswer;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "lecture_id")
     private Lecturer lecturer;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "questions")
     private List<Test> tests;
+
+    public Boolean getIsTicked() {
+        return isTicked;
+    }
+
+    public void setIsTicked(Boolean isTicked) {
+        this.isTicked = isTicked;
+    }
 
     public List<Test> getTests() {
         return tests;

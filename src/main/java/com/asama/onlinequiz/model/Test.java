@@ -1,7 +1,7 @@
 package com.asama.onlinequiz.model;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,20 +30,32 @@ public class Test {
     private Long id;
 
     @Column(columnDefinition = "nvarchar(200)")
+    @NotBlank
     private String name;
 
+    @NotNull
     private Integer time;
 
-    private Integer numQuestions;
+    @Min(1)
+    private Integer qsEasy;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Min(1)
+    private Integer qsNormal;
+
+    @Min(1)
+    private Integer qsHard;
+
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date open;
+    private Date timeOpen;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date close;
+    private Date timeClose;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;
@@ -48,22 +63,46 @@ public class Test {
     @ManyToMany
     @JoinTable(name = "test_question", joinColumns = { @JoinColumn(name = "test_id") }, inverseJoinColumns = {
             @JoinColumn(name = "question_id") })
-    private Set<Question> questions;
+    private List<Question> questions;
 
-    public Date getOpen() {
-        return open;
+    public Integer getQsEasy() {
+        return qsEasy;
     }
 
-    public void setOpen(Date open) {
-        this.open = open;
+    public void setQsEasy(Integer qsEasy) {
+        this.qsEasy = qsEasy;
     }
 
-    public Date getClose() {
-        return close;
+    public Integer getQsNormal() {
+        return qsNormal;
     }
 
-    public void setClose(Date close) {
-        this.close = close;
+    public void setQsNormal(Integer qsNormal) {
+        this.qsNormal = qsNormal;
+    }
+
+    public Integer getQsHard() {
+        return qsHard;
+    }
+
+    public void setQsHard(Integer qsHard) {
+        this.qsHard = qsHard;
+    }
+
+    public Date getTimeOpen() {
+        return timeOpen;
+    }
+
+    public void setTimeOpen(Date timeOpen) {
+        this.timeOpen = timeOpen;
+    }
+
+    public Date getTimeClose() {
+        return timeClose;
+    }
+
+    public void setTimeClose(Date timeClose) {
+        this.timeClose = timeClose;
     }
 
     public Long getId() {
@@ -90,14 +129,6 @@ public class Test {
         this.time = time;
     }
 
-    public Integer getNumQuestions() {
-        return numQuestions;
-    }
-
-    public void setNumQuestions(Integer numQuestions) {
-        this.numQuestions = numQuestions;
-    }
-
     public Subject getSubject() {
         return subject;
     }
@@ -106,11 +137,11 @@ public class Test {
         this.subject = subject;
     }
 
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Set<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 

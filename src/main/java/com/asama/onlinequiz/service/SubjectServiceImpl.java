@@ -40,4 +40,9 @@ public class SubjectServiceImpl implements SubjectService {
         subjectRepository.delete(subject);
     }
 
+    @Override
+    public List<Subject> findListByKey(String key) {
+        return subjectRepository.findTop10ByNameLike("%"+key+"%");
+    }
+
 }

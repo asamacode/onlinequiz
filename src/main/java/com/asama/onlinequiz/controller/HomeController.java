@@ -1,5 +1,6 @@
 package com.asama.onlinequiz.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -19,12 +20,17 @@ import com.asama.onlinequiz.dto.LoginDTO;
 import com.asama.onlinequiz.model.Lecturer;
 import com.asama.onlinequiz.model.Manager;
 import com.asama.onlinequiz.model.Student;
+import com.asama.onlinequiz.model.Test;
 import com.asama.onlinequiz.service.LecturerService;
 import com.asama.onlinequiz.service.ManagerService;
 import com.asama.onlinequiz.service.StudentService;
+import com.asama.onlinequiz.service.TestService;
 
 @Controller
 public class HomeController {
+    
+    @Autowired
+    TestService testService;
 
     @Autowired
     StudentService studentService;
@@ -39,7 +45,12 @@ public class HomeController {
     HttpSession session;
 
     @RequestMapping(value = { "/", "/home" })
-    public String home() {
+    public String home(Model model) {
+        Student student = (Student) session.getAttribute("user");
+        if (student != null) {
+            List<Test> tests = testService.findAllListTestByStudent(student);
+            model.addAttribute("tss", tests);
+        }
         return "home/index";
     }
 

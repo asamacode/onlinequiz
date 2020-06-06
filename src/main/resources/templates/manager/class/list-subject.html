@@ -1,0 +1,45 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-manager-layout :: main-manager-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Quản lý môn học - Theo lớp</title>
+
+<th:block id="home-static-resources">
+	<script>
+
+</script>
+</th:block>
+
+</head>
+<div id="home-main-content">
+	<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Tên môn học</th>
+      <th scope="col">Số tín chỉ</th>
+      <th scope="col">Chuyên ngành</th>
+      <th scope="col">Giảng viên</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+  	<th:block th:each="n : ${subjects}">
+    <tr th:attr="data-id=${n.id}">
+      <td scope="row" th:utext="${n.id}"></td>
+      <td th:utext="${n.name}"></td>
+      <td th:utext="${n.credits}"></td>
+      <td th:utext="${n.specialization.name}"></td>
+      <td th:utext="${n.lecturer.fullName}"></td>
+      
+    </tr>
+    </th:block>
+  </tbody>
+</table>
+
+</div>
+
+</html>

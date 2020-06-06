@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "answers")
@@ -19,6 +20,9 @@ public class Answer {
 
     @Column(columnDefinition = "nvarchar(1000)")
     private String content;
+
+    @Transient
+    private Boolean isTicked;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
@@ -32,6 +36,14 @@ public class Answer {
         super();
         this.content = content;
         this.question = question;
+    }
+
+    public Boolean getIsTicked() {
+        return isTicked;
+    }
+
+    public void setIsTicked(Boolean isTicked) {
+        this.isTicked = isTicked;
     }
 
     public Long getId() {

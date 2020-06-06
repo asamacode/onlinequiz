@@ -17,4 +17,6 @@ public interface SubjectService {
 
     void delete(Subject subject);
 
+    List<Subject> findListByKey(String key);
+
 }

@@ -1,0 +1,153 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Làm bài thi</title>
+
+<th:block id="home-static-resources">
+	<link rel="stylesheet" type="text/css" href="styles/login.css">
+</th:block>
+
+</head>
+<div id="home-main-content">
+<!--Feature-->
+	<section id="feature" class="section-padding ">
+		<div class="container">
+			
+			<div class="row " style="margin-top: 25px">
+
+				<div class="col-md-8 col-12">
+
+					<!-- Default unchecked -->
+						<th:block th:each="qs, iter : ${questions}">
+						<div class="panel panel-success">
+
+							
+								<div th:if="${page == 1}" class="panel-heading ">
+									<span th:utext="${'Câu '+ {iter.index + 1} + ':' + qs.content}"></span>
+					
+								</div>
+							
+							
+								<div th:if="${page > 1}" class="panel-heading ">
+								<span th:utext="${'Câu '+ {(page - 1)*8+ iter.index + 1} + ':' + qs.content}"></span>
+								</div>
+							
+						
+							<div class="panel-body">
+
+								<ul class="nav flex-column">
+									<th:block th:each="as : ${qs.answers}">
+	
+										<li class="nav-item" style="margin-bottom: 5px">
+											<div class="input-group">
+												<span class="input-group-addon"> 
+									
+														<input th:if="${as.isTicked}" type="radio" aria-label="..."
+															th:name="${qs.id}"
+															th:attr="data-id=${qs.id+'_'+as.id}"
+															style="display: block" checked>
+													 
+														<input th:unless="${as.isTicked}" type="radio" aria-label="..."
+															th:name="${qs.id}"
+															th:attr="data-id=${qs.id+'_'+as.id}"
+															style="display: block">
+													
+												</span> <input type="text" class="form-control"
+													th:value="${as.content}" disabled>
+											</div> <!-- /input-group -->
+										</li>
+									
+									</th:block>
+								</ul>
+							</div>
+						</div>
+
+					</th:block>
+
+			
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item disabled"><a class="page-link" href="#"
+								tabindex="-1">Previous</a></li>
+							<th:block th:each="p, iter : ${pagenums}">
+
+								<li class="page-item"><a class="page-link"
+									th:href="@{'/dotest?page=' + ${iter.index+1}"><span th:utext="${iter.index+1}"></span></a></li>
+							</th:block>
+							<li class="page-item"><a class="page-link" href="#">Next</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+
+				<div class="col-md-3 col-12 pull-right" style="margin-left: 50px;position:sticky;top:100px">
+				<div class="col">
+				<div class="row">
+						<div class="logo">
+							 
+								<h4 style="font-weight: bold;">Câu hỏi:</h4>
+							
+						</div>
+						<th:block th:each="qs, iter : ${questionsall}">
+							
+								
+										<button th:id="'btn_' + ${iter.index +1}" th:if="${qs.isTicked}" type="button" class="btn btn-primary"
+										style="width: 50px;margin:3px"><span th:utext="${iter.index +1}"></span></button>
+								
+								
+										<button th:id="'btn_' + ${iter.index +1}" th:unless="${qs.isTicked}" type="button" class="btn btn-default"
+										style="width:50px;margin:3px" ><span th:utext="${iter.index +1}"></span></button>
+								 
+						</th:block>
+					</div>
+					<div class="row">
+						<a href="trangxemketqua.jsp" data-toggle="modal"
+								data-target="#myModal" style="color: blue">Finish attempt..</a>
+								<h4 id="timeLimit" style="color: blue;"></h4>
+						
+					</div>
+				</div>
+					
+				</div>
+
+
+			</div>
+			<!-- Default unchecked -->
+
+		
+		</div>
+
+
+		<!-- modal -->
+		<form action="${pageContext.request.contextPath}/Submit" method="POST">
+			<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Bạn có chắn chắc nộp bài không!</h4>
+						</div>
+						<div class="modal-footer">
+							<div class="row" style="padding: 30px">
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal" style="float: left;">Close</button>
+								<button id="btnSubmit" type="submit" class="btn btn-success"
+									style="float: right">Đồng Ý</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</form>
+		
+		<!-- endmodal -->
+	</section>
+	<!--/ feature-->
+</div>
+</html>

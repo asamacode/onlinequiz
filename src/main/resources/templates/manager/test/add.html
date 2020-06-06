@@ -5,7 +5,7 @@
                                                 ~{::#home-static-resources},
                                                 ~{::#home-main-content} )}">
 <head>
-<title>Quản lý môn học</title>
+<title>Quản lý đề thi</title>
 
 <th:block id="home-static-resources">
 
@@ -18,15 +18,23 @@
 
 </head>
 <div id="home-main-content">
-	<div class="row ">
+	<div class="row">
+					
                     <div class="col-md-4">
+                    <hr>
+			<div th:if="${message != null}"
+           th:utext="${message}" class="alert alert-danger" role="alert"></div>
+           <div th:if="${param.message != null}"
+           th:text="${param.message[0]}" class="alert alert-warning" role="alert"></div>
+                    <form th:action="@{/manager/test/create}" method="post" id="frmAddExam" th:object="${tss}">
                         <div class="card card-user">
                             <div class="row justify-content-center my-2">
                             	<div class="col-lg-10">
-                                    <select class="form-control my-2" id="sltSubject">
+                                    <select th:field="*{subject.id}" class="form-control my-2" id="sltSubject">
                                      	<option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}" ></option>
                                 
                                     </select>
+                                    <span th:if="${#fields.hasErrors('subject.id')}" th:errors="*{subject.id}"></span>
                                 </div>
 
                             </div>
@@ -40,19 +48,37 @@
                                             <div class="row justify-content-center ">
                                                 <div class="col-md-4">
                                                     <div class="form-group justify-content-center text-center">
-                                                        <input type="number" class="form-control" value="0" onchange="countTotal();" name="easy" id="easy">
+                                                    	<div th:if="${easy != null}">
+                                                    		<input type="number" class="form-control" th:value="${easy}" name="easy" id="easy">
+                                                    	</div>
+                                                    	<div th:unless="${easy != null}">
+                                                    		<input th:field="*{qsEasy}" type="number" class="form-control" value="0" name="easy" id="easy">
+                                                    		<span th:if="${#fields.hasErrors('qsEasy')}" th:errors="*{qsEasy}"></span>
+                                                    	</div>
                                                         <p>Dễ</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group justify-content-center text-center">
-                                                        <input type="number" class="form-control" value="1" onchange="countTotal();" name="normal" id="normal">
+                                                    <div th:if="${normal != null}">
+                                                    	<input type="number" class="form-control" th:value="${normal}" name="normal" id="normal">
+                                                    </div>
+                                                     <div th:unless="${normal != null}">
+                                                    	<input th:field="*{qsNormal}" type="number" class="form-control" value="0" name="normal" id="normal">
+                                                    	<span th:if="${#fields.hasErrors('qsNormal')}" th:errors="*{qsNormal}"></span>
+                                                    </div>
                                                         <p>TB</p>
                                                     </div>	
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group justify-content-center text-center">
-                                                        <input type="number" class="form-control" value="2" onchange="countTotal();" name="difficult" id="difficult">
+                                                    <div th:if="${diff != null}">
+                                                    	<input type="number" class="form-control" th:value="${diff}" name="difficult" id="difficult">
+                                                    </div>
+                                                         <div th:unless="${diff != null}">
+                                                    	<input th:field="*{qsHard}" type="number" class="form-control" value="0" name="difficult" id="difficult">
+                                                    	<span th:if="${#fields.hasErrors('qsHard')}" th:errors="*{qsHard}"></span>
+                                                    </div>
                                                         <p>Khó</p>
                                                     </div>
                                                 </div>
@@ -60,14 +86,21 @@
                                         </div>
                                         <div class="row justify-content-center ">
                                             <div class="form-group justify-content-center text-center">
-                                                <input type="text" class="form-control text-center" value="" readonly id="total">
+                                            	<div th:if="${diff != null and normal != null and easy != null}">
+                                            		<input type="number" class="form-control text-center" th:value="${ T(Integer).parseInt(diff) + T(Integer).parseInt(normal) + T(Integer).parseInt(easy) }" readonly id="total">
+                                          
+                                            	</div>
+                                                <div th:unless="${diff != null and normal != null and easy != null}">
+                                            		<input type="number" class="form-control text-center" readonly value="0" id="total">
+                                            		
+                                            	</div>
                                                 <p>Tổng số câu hỏi</p>
                                             </div>
                                             
                                         </div>
                                         
                                     </div>
-                                    <button type="button"  class="btn btn-primary btn-round col-12" id="btnCreateExam">Tạo ngẫu nhiên</button>
+                                    <button type="button"  class="btn btn-primary btn-round col-12" id="btnCreateRd">Tạo ngẫu nhiên</button>
                                 </div>
                             </div>
                             
@@ -77,45 +110,54 @@
                                 <h4 class="card-title"><b>Tùy Chọn</b></h4>
                             </div>
                             <div class="card-body">
-                            <form action="${pageContext.request.contextPath}/AddExam" method="post" id="frmAddExam">
+                          
                                 <ul class="list-unstyled ">
                                     <li>
                                     	<p class="my-1"> Thời gian mở đề </p>
                                         <div class="my-1">
-                                            <input type="datetime-local" class="form-control" placeholder="Thời Gian Mở" name="timeOpen">
+                                            <input th:field="*{timeOpen}" type="datetime-local" class="form-control" placeholder="Thời Gian Mở">
+                                            <span th:if="${#fields.hasErrors('timeOpen')}" th:errors="*{timeOpen}"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <p class="my-1"> Thời gian đóng đề </p>
                                     
                                         <div class="my-1">
-                                            <input type="datetime-local" class="form-control" placeholder="Thời gian đóng" name="closeTime">
+                                            <input th:field="*{timeClose}" type="datetime-local" class="form-control" placeholder="Thời gian đóng">
+                                            <span th:if="${#fields.hasErrors('timeClose')}" th:errors="*{timeClose}"></span>
                                         </div>
                                     </li>
                                     	
                                     <li>
                                     	<p class="my-1"> Tên bài thi </p>
                                     	<div class="my-1">	
-                                        	<input type="text" class="form-control" placeholder="Tên bài thi" name="nameExam" >
+                                        	<input th:field="*{name}" type="text" class="form-control" placeholder="Tên bài thi" >
+                                        	<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 										</div>
                                     </li>
                                     <li>
                                     	<p class="my-1"> Thời gian làm (phút) </p>
                                     	<div class="my-1">	
-                                        	<input type="number" name="limitTime" class="form-control" placeholder="Thời gian làm bài">
+                                        	<input type="number" th:field="*{time}" class="form-control" placeholder="Thời gian làm bài">
+                                        	<span th:if="${#fields.hasErrors('time')}" th:errors="*{time}"></span>
 										</div>
                                     </li>
                                 </ul>
-                                </form>
+                                <div class="row justify-content-center">
+				            	      <button type="submit" class="btn btn-success btn-round col-8"> Tạo Đề Thi </button>           	
+				            	</div>
+                                
                             </div>
                         </div>
+                        </form>
                     </div>
+                    
                     <div class="col-md-8">
                         <div class="card card-user">
                             <div class="card-header row mx-2 justify-content-center text-center">
                                 <h5 class="card-title col-12">Danh Sách Câu Hỏi</h5>
                                 <button class="btn btn-danger col-4" id="btnDeleteAll"> Xóa toàn bộ </button>
-                                <button class="btn btn-info col-4" id="btnAdd"> Thêm câu hỏi </button>
+                                <button class="btn btn-info col-4" id="btnAdd" data-toggle="modal" data-target="#mModal"> Thêm câu hỏi </button>
                                 
                             </div>
                             <div class="card-body">
@@ -129,67 +171,252 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    	<!-- <tr id="frameAdd" class="my-3">
-	                                            <td colspan="4" class="my-3">
-	                                            	 <select class="form-control slcQuestion" class="my-3" id="addQuestion">
-	                                            		<option selected> Chọn câu hỏi thêm vào<option>
-		                                            	
-	                                            	
-	                                            	</select>
-	                                            </td>
-	                                        </tr> -->
-                                       <!-- <th:block th:each="q : ${currentQuestions}">
+                                    	
+                                       <th:block th:each="q : ${currentQuestions}">
                                        
-                                       <tr id= "frameQuestion_${loop.index}" >
-	                                            <td> ${question.questionId } </td>
-	                                            <td>
-	                                            	 
-	                                            </td>
-	                                            <td>
-	                                            	
-	                                            </td>
+                                       	<tr>
+	                                            <td th:utext="${q?.id }"></td>
+	                                            <td th:utext="${q?.content }"> </td>
+	                                            <td th:utext="${q?.rightAnswer.content }"> </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btnDelete" 
-                                                            data-id="${ question.questionId }"
-                                                            data-index="${loop.index}">
+                                                           th:attr="data-id=${q.id}" >
                                                         <i class="fa fa-trash" style="font-size:10px"></i>
                                                     </button>
 	                                            </td>
 	                                        </tr>
 										
                                        
-                                       </th:block> -->
+                                       </th:block> 
                                     
                                         
                                     </tbody>
                                 </table>
-                                <nav aria-label="Page navigation example" class="float-right">
-                                    <ul class="pagination">
-                                        
-                                       
-																				
-                                    </ul>
-                                </nav>
+                                <th:block th:if="${page != null}">
+            	<div class="row text-center mt-5">
+                <div class="col-12">
+                	<th:block th:if="${(page - 2) > 0}">
+                		<a th:href="${'/manager/test/add/'+{speid}+'/page/' + {page - 2}}" class="p-3 d-inline-block">
+                		<span th:utext="${page - 2}"></span>
+                		</a>
+                		
+                	</th:block>
+                	<th:block th:if="${(page - 1) > 0}">
+                    	<a th:href="${'/manager/test/add/'+{speid}+'/page/' + {page - 1}}" class="p-3 d-inline-block">
+                    	<span th:utext="${page - 1}"></span>
+                    	</a>
+                    </th:block>
+                    
+                    <span th:utext="${page}"></span>
+                    
+                    
+                    <th:block th:if="${(page + 1) <= pageCount}">
+                    	<a th:href="${'/manager/test/add/'+{speid}+'/page/'+ {page + 1}}" class="p-3 d-inline-block">
+                    	<span th:utext="${page + 1}"></span>
+                    	</a>
+                    </th:block>
+                    <th:block th:if="${(page + 2) <= pageCount}">
+                    	<a th:href="${'/manager/test/add/'+{speid}+'/page/'+ {page + 2}}" class="p-3 d-inline-block">
+                    	<span th:utext="${page + 2}"></span>
+                    	</a>
+                    </th:block>
+                </div>
+            </div>
+            </th:block>
                             </div>
                         </div>
                     </div>
-
-                
+                    
             	</div>
-            	<div class="row justify-content-center">
-            	      <button type="button" class="btn btn-success btn-round col-8" id="btnAddExam"> Tạo Đề Thi </button>           	
-            	</div>
-<script>
-        function countTotal()
-        {
-        	  var diff =  parseInt($("#difficult").val());
-	  		  var normal =  parseInt($("#normal").val());
-	  		  var easy =  parseInt($("#easy").val());
+            	
+<!-- Modal -->
+<div class="modal fade" id="mModal" tabindex="-1" role="dialog" aria-labelledby="#mModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thêm câu hỏi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<span>Nhập nội dung câu hỏi cần tìm :</span>
+      	<input id="qs_content" placeholder="Nhập từ khóa" type="text">
+      	<button id="btn-search" type="button" class="btn btn-primary">Tìm kiếm</button>
+      	<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Câu hỏi</th>
+      <th scope="col">Mức độ</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+  	
+   
+  </tbody>
+</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script th:inline="javascript">
+$(document).ready(function() {
 	
-	  		  var total = diff+normal+easy;
-	  		  $("#total").val(total);
-        }
+	var check = $("#total").val();
+	if (check == 0) {
+		$("#btnAdd").hide();
+		$("#btnDeleteAll").hide();	
+	} else {
+		$("#btnAdd").show();
+		$("#btnDeleteAll").show();
+	}
+	
+	$("#btn-search").click(function() {
+		var key = $("#qs_content").val();
+		var subject = $('#sltSubject').val();
+		if (key == '') {
+			alert("Vui lòng nhập nội dung hợp lệ !");
+		} else {
+			$.ajax({
+				url: '/manager/test/question?search='+key+'&subid='+subject,
+				success: function(res) {
+					
+					$("#tbody").html("");
+					$(res).each(function(index, qs) {
+						var lv = "";
+						switch(qs.level) {
+						  case 0:
+						    lv = 'Dễ'
+						    break;
+						  case 1:
+							  lv = 'Trung bình'
+						    break;
+						  default:
+							  lv = 'Khó'
+						}
+						
+						var tr = $("<tr/>");
+						$("<td/>").html(qs.id).appendTo(tr);
+						$("<td/>").html(qs.content).appendTo(tr);
+						$("<td/>").html(lv).appendTo(tr);
+						
+						var s = `<td>
+							<a class="btn btn-sm btn-info" href="/manager/test/add/`+[[${speid}]]+`/`+qs.id+`" >Thêm</a>
+						</td>`;
+						
+						$(s).appendTo(tr);
+						tr.appendTo("#tbody");
+						
+					})
+				},
+				error: function(err) {
+		           alert("Xảy ra lỗi "); // @text = response error, it is will be errors: 324, 500, 404 or anythings else
+		          }
+			});
+		}
+		return false;
+	});
+	
+	
+	$("#btnDeleteAll").click(function() {
+		$.ajax({
+			url: '/manager/test/question/delete-all',
+			success: function(res) {
+				if (res) {
+					alert("Đã xóa toàn bộ !");
+					location.reload();
+				} else {
+					alert("Xảy ra lỗi !");
+				}
+			}
+		});
+	});
+	
+	$(".btnDelete").click(function() {
+		var id = $(this).attr("data-id");
 		
+		$.ajax({
+			url: '/manager/test/question/delete/' + id,
+			success: function(res) {
+				if (res) {
+					alert("Đã xóa !");
+					location.reload();
+				} else {
+					alert("Xảy ra lỗi !");
+				}
+			}
+		})
+		
+	});
+	
+	$('#btnCreateRd').click(function(){
+	    var difficult = $('#difficult').val();
+	    var normal = $('#normal').val();
+	    var easy = $('#easy').val();
+	    var total = $('#total').val();
+	    var subject = $('#sltSubject').val();
+	    
+	    var send_data = {
+	    	diff : difficult,
+	    	normal : normal,
+	    	easy : easy,
+	    	subject : subject
+	    }
+	    
+	    if(difficult == "" ||normal == "" ||easy == "" || total == "")
+	    {
+	        alert("Xin vui lòng nhập số lượng câu hỏi từng loại");
+	    }
+	    else 
+	    	if (subject == "")
+	    	{ 
+	            alert("Xin vui lòng chọn môn học");
+	    	}
+	        else    
+	            {
+	        	$.ajax({
+	    			url : '/manager/test/add/' + [[${speid}]] ,
+	    			data : send_data,
+	    			success : function() {
+	    				$("#btnAdd").show();
+	    				$("#btnDeleteAll").show();
+	    				location.reload();
+	    			}
+	    		});
+	        		
+	            }
+	   });
+	$('#difficult').change(function() {
+		countTotal();
+	});
+	
+	$('#normal').change(function() {
+		countTotal();
+	});
+	
+	$('#easy').change(function() {
+		countTotal();
+	});
+		
+	function countTotal()
+	{
+		  	var diff =  parseInt($("#difficult").val());
+			var normal =  parseInt($("#normal").val());
+			var easy =  parseInt($("#easy").val());
+
+			var total = diff+normal+easy;
+			$("#total").val(total);
+			
+	}
+	
+});
+	
 </script>
 </div>
 </html>

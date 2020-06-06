@@ -27,11 +27,11 @@ public class ResultTest {
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date start;
+    private Date timeStart;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date end;
+    private Date timeEnd;
 
     @OneToOne
     @JoinColumn(name = "test_id")
@@ -57,20 +57,20 @@ public class ResultTest {
         this.score = score;
     }
 
-    public Date getStart() {
-        return start;
+    public Date getTimeStart() {
+        return timeStart;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setTimeStart(Date timeStart) {
+        this.timeStart = timeStart;
     }
 
-    public Date getEnd() {
-        return end;
+    public Date getTimeEnd() {
+        return timeEnd;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setTimeEnd(Date timeEnd) {
+        this.timeEnd = timeEnd;
     }
 
     public Test getTest() {

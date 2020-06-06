@@ -1,7 +1,7 @@
 package com.asama.onlinequiz.model;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,10 +33,10 @@ public class AppClass {
     private SchoolYear schoolYear;
 
     @OneToMany(mappedBy = "appClass")
-    private List<Student> students;
+    private List<Student> students = new ArrayList<Student>();
 
     @ManyToMany(mappedBy = "appClasses", fetch = FetchType.EAGER)
-    private Set<Subject> subjects;
+    private List<Subject> subjects = new ArrayList<Subject>();
 
     public List<Student> getStudents() {
         return students;
@@ -46,11 +46,11 @@ public class AppClass {
         this.students = students;
     }
 
-    public Set<Subject> getSubjects() {
+    public List<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(Set<Subject> subjects) {
+    public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
     }
 
