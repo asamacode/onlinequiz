@@ -8,7 +8,7 @@
 <title>Làm bài thi</title>
 
 <th:block id="home-static-resources">
-	<link rel="stylesheet" type="text/css" href="styles/login.css">
+	
 </th:block>
 
 </head>
@@ -93,13 +93,12 @@
 							
 						</div>
 						<th:block th:each="qs, iter : ${questionsall}">
-							
-								
-										<button th:id="'btn_' + ${iter.index +1}" th:if="${qs.isTicked}" type="button" class="btn btn-primary"
+						
+										<button th:attr="data-id=${iter.index +1}" th:if="${qs.isTicked}" type="button" class="btn btn-primary btn-all"
 										style="width: 50px;margin:3px"><span th:utext="${iter.index +1}"></span></button>
 								
 								
-										<button th:id="'btn_' + ${iter.index +1}" th:unless="${qs.isTicked}" type="button" class="btn btn-default"
+										<button th:attr="data-id=${iter.index +1}" th:unless="${qs.isTicked}" type="button" class="btn btn-default btn-all"
 										style="width:50px;margin:3px" ><span th:utext="${iter.index +1}"></span></button>
 								 
 						</th:block>
@@ -149,5 +148,56 @@
 		<!-- endmodal -->
 	</section>
 	<!--/ feature-->
+<script>
+$(document).ready(function() {
+	
+	var myVar = setInterval(loadtime, 1000);
+
+	function loadtime() {
+		$.ajax({
+			url : '/dotest/countdown',
+			success : function(data) {
+				if (data == '00 : 01') {				
+					var url = '/dotest/submit'; 
+					var form = $('<form action="' + url + '" method="post">' + 
+					    '</form>'); 
+					$('body').append(form); 
+					form.submit(); 
+					clearInterval(myVar);
+				} else
+					$('#timeLimit').text(data);
+			}
+		});
+	}
+	
+	$(".btn-all").click(function() {
+		var item_per_page = 1;
+		var id = $(this).attr("data-id");
+		var page = Math.ceil(id/item_per_page);
+		
+		location.href = '/dotest?page='+page;
+	});
+	
+	$('[type="radio"]').change(function(event) {
+		var ids = $(this).attr("data-id").split("_");
+		var send_data = {
+			qsid : ids[0],
+			asid : ids[1]
+		}
+		
+		$.ajax({
+			url: '/dotest/click-answer',
+			data: send_data,
+			success: function(res) {
+				if (res) {
+					location.reload();
+				} else {
+					alert("Xảy ra lỗi !");
+				}
+			}
+		});
+	});
+});
+</script>
 </div>
 </html>

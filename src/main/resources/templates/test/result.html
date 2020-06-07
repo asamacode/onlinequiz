@@ -19,22 +19,22 @@
 		<div class="container">
 			<div class="row">
 				<div class="col text-center">
-					<h1 class="home_title">Xác nhận làm bài thi</h1>
+					<h1 class="home_title">Kết quả làm bài thi</h1>
 					<div class="intro-para text-center quote">
 							
 								<p class="big-text">Môn:
 									<span th:utext="${ts.subject.name}"></span></p>
 								<p class="small-text">Gồm có <span th:utext="${ts.qsEasy + ts.qsNormal + ts.qsHard}"></span> câu hỏi và
-									câu trả lời. Nếu bạn trả lời đúng thì bạn được 0.5đ. Nếu làm
-									full sẽ được 10 điểm. Chọn một câu trả lời đúng.</p>
+									câu trả lời. Nếu bạn trả lời đúng thì bạn được 0.5đ.</p>
+									<p>Điểm của bạn: <span th:utext="${score}"></span></p>
 								<!-- <p class="big-text">Danh sách đề thi</p> -->
 								
 				
 
 						</div>
 					<div class="home_button trans_200">
-						<a href="" id="btn-start" class="btn get-quote">
-									Bắt đầu
+						<a href="/test/history" id="btn-start" class="btn get-quote">
+									Xem lịch sử thi
 									</a>
 					</div>
 				</div>
@@ -43,17 +43,7 @@
 	</div>
 </div>
 <script>
-$(document).ready(function() {
-	$("#btn-start").click(function() {
-		$.ajax({
-			url: '/start',
-			success: function(res) {
-				location.href = '/dotest';
-			}
-		});
-		return false;
-	})
-});
+
 </script>
 </div>
 </html>

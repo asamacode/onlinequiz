@@ -1,4 +1,4 @@
-package com.asama.onlinequiz;
+package com.asama.onlinequiz.utils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

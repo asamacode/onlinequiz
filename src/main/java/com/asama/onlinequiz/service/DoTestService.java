@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.asama.onlinequiz.model.Answer;
 import com.asama.onlinequiz.model.Question;
 import com.asama.onlinequiz.model.Test;
 
@@ -34,6 +35,25 @@ public class DoTestService {
     }
 
     Map<Long, Question> questions = new HashMap<Long, Question>();
+   
+    public Test getCurrentTest() {
+        Optional<Test> tests = testService.findById(this.testId);
+        return tests.get();
+    }
+    
+    public Float countMark() {
+        Float mark = (float) 0;
+        for (Question qs : this.getQuestions()) {
+            if (qs.getIsTicked()) {
+                for (Answer as : qs.getAnswers()) {
+                    if (as.getIsTicked() && as.getId() == qs.getRightAnswer().getId()) {
+                        mark++;
+                    }
+                }
+            }
+        }
+        return mark;
+    }
 
     public Test getAllQuestionTest(Long id) {
         Optional<Test> test = testService.findById(id);
@@ -46,10 +66,20 @@ public class DoTestService {
         return test.get();
     }
 
-    public void setQuestionTick(Long id) {
-        Question qs = this.questions.get(id);
+    public void setAnswerQuestionTick(Long qid, Long aid) {
+        Question qs = this.questions.get(qid);
+        for (Answer as : qs.getAnswers()) {
+
+            if (as.getId() == aid) {
+                as.setIsTicked(true);
+            } else {
+
+                as.setIsTicked(false);
+
+            }
+        }
         qs.setIsTicked(true);
-        this.questions.put(id, qs);
+        this.questions.put(qid, qs);
     }
 
     public List<Question> getQuestions() {

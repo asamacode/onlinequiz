@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.asama.onlinequiz.EncryptUtils;
 import com.asama.onlinequiz.model.AppClass;
 import com.asama.onlinequiz.model.Student;
 import com.asama.onlinequiz.model.UserRole;
 import com.asama.onlinequiz.service.AppClassService;
 import com.asama.onlinequiz.service.StudentService;
 import com.asama.onlinequiz.service.UserRoleService;
+import com.asama.onlinequiz.utils.EncryptUtils;
 
 @Controller
 @RequestMapping("/manager/student")

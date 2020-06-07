@@ -43,7 +43,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public List<Test> findAllListTestByStudent(Student student) {
-        return testRepository.findListTestStudentId(student.getAppClass().getId());
+        return testRepository.findListTestStudentId(student.getAppClass().getId(), student.getId());
     }
 
 }

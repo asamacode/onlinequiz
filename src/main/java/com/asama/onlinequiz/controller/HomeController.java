@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.asama.onlinequiz.EncryptUtils;
 import com.asama.onlinequiz.dto.LoginDTO;
 import com.asama.onlinequiz.model.Lecturer;
 import com.asama.onlinequiz.model.Manager;
@@ -25,6 +24,7 @@ import com.asama.onlinequiz.service.LecturerService;
 import com.asama.onlinequiz.service.ManagerService;
 import com.asama.onlinequiz.service.StudentService;
 import com.asama.onlinequiz.service.TestService;
+import com.asama.onlinequiz.utils.EncryptUtils;
 
 @Controller
 public class HomeController {
