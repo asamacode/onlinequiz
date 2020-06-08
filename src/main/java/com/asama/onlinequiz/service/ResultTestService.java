@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.asama.onlinequiz.model.ResultTest;
+import com.asama.onlinequiz.model.Student;
 
 public interface ResultTestService {
 
@@ -17,4 +18,6 @@ public interface ResultTestService {
     List<ResultTest> findAll();
     
     void delete(ResultTest resultTest);
+
+    List<ResultTest> findAllListTestedByStudent(Student student);
 }

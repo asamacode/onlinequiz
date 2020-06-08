@@ -36,6 +36,9 @@ $(document).ready(function() {
 
 </head>
 <div id="home-main-content">
+	<hr>
+							<div th:if="${message != null}" th:utext="${message}" class="alert alert-danger" role="alert"></div>
+           <div th:if="${param.message != null}" th:text="${param.message[0]}" class="alert alert-warning" role="alert"></div>
 	<table class="table table-striped">
   <thead>
     <tr>

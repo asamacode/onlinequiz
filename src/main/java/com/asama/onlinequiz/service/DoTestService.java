@@ -26,6 +26,14 @@ public class DoTestService {
 
     private Long testId;
 
+    Map<Long, Question> questions = new HashMap<Long, Question>();
+    
+    
+    public void clear() {
+        this.questions.clear();
+        this.testId = null;
+    }
+    
     public Long getTestId() {
         return testId;
     }
@@ -33,8 +41,6 @@ public class DoTestService {
     public void setTestId(Long testId) {
         this.testId = testId;
     }
-
-    Map<Long, Question> questions = new HashMap<Long, Question>();
    
     public Test getCurrentTest() {
         Optional<Test> tests = testService.findById(this.testId);
@@ -42,7 +48,7 @@ public class DoTestService {
     }
     
     public Float countMark() {
-        Float mark = (float) 0;
+        Float mark = (float) (10/this.questions.size());
         for (Question qs : this.getQuestions()) {
             if (qs.getIsTicked()) {
                 for (Answer as : qs.getAnswers()) {

@@ -1,0 +1,55 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Làm bài thi</title>
+
+<th:block id="home-static-resources">
+	
+</th:block>
+
+</head>
+<div id="home-main-content">
+<div class="col" style="padding: 150px;">
+		<div class="row " align="center">
+			<div class="col-md-8 col-12"
+				style="margin-left: auto; margin-right: auto; float: none;">
+				<th:block th:each="t : ${tests}">
+					<div class="panel panel-success" style="margin-bottom: 10px;">
+						<div class="panel-heading">
+							<h3>Môn: <span th:utext="${t.test.subject.name}"></span></h3>
+						</div>
+						<div class="panel-body"></div>
+						<div style="margin-bottom: 5px;">
+							<label style="font-weight: bold;">Bài kiểm tra:
+								<span th:utext="${t.test.name}"></span></label>
+						</div>
+
+						<div style="margin-bottom: 5px;">
+							<label style="font-weight: bold;">Điểm:</label> <span th:utext="${t.score}"></span>
+						</div>
+						<div style="margin-bottom: 5px;">
+							<label style="font-weight: bold;">Thời gian làm:</label> <span th:utext="${t.timeStart}"></span>
+						</div>
+						<div style="margin-bottom: 5px;">
+							<label style="font-weight: bold;">Thời kết thúc:</label> <span th:utext="${t.timeEnd}"></span>
+						</div>
+						<div class="panel-footer">
+							<a th:href="@{'/ReportExam?idExam='+ ${t.id}}" class="btn btn-info"> Xem Chi Tiết Kết Quả</a>
+						</div>
+					</div>
+				</th:block>
+
+			</div>
+		</div>
+	</div>
+
+
+<script>
+
+</script>
+</div>
+</html>

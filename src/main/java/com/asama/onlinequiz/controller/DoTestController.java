@@ -2,6 +2,7 @@ package com.asama.onlinequiz.controller;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,6 +33,24 @@ public class DoTestController {
     @Autowired
     HttpSession session;
     
+    @RequestMapping("/mytest/view/{tid}")
+    public String viewTestDetail(Model model) {
+        return "redirect:/login";
+    }
+    
+    @RequestMapping("/mytest/history")
+    public String history(Model model) {
+        Student student = (Student) session.getAttribute("user");
+        if (student != null) {
+            List<ResultTest> tests = resultService.findAllListTestedByStudent(student);
+            model.addAttribute("tests", tests);
+        } else {
+            return "redirect:/login";
+        }
+        
+        return "test/list-result";
+    }
+    
     @RequestMapping("/dotest/submit")
     public String submit(Model model) {
         String startTime = (String) session.getAttribute("timeStarting");
@@ -53,6 +72,11 @@ public class DoTestController {
             resultService.save(resultTest);
             model.addAttribute("ts", test);
             model.addAttribute("score", scFloat);
+            
+            session.removeAttribute("timeStarting");
+            session.removeAttribute("timeFinishing");
+            
+            doTestService.clear();
         } catch (ParseException e) {
             e.printStackTrace();
         }

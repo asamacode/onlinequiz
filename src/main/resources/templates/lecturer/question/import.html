@@ -1,0 +1,36 @@
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/main-lecturer-layout :: main-lecturer-fragment(  
+                                                ~{::title},
+                                                ~{::#home-static-resources},
+                                                ~{::#home-main-content} )}">
+<head>
+<title>Import câu hỏi</title>
+
+<th:block id="home-static-resources">
+
+	
+</th:block>
+
+</head>
+<div id="home-main-content">
+	<div class="row h-100 justify-content-center align-items-center">
+  <form class="card col-sm-4 mt-5 p-5" method="post" th:action="@{/lecturer/question/import}"
+        enctype="multipart/form-data">
+        <div class="form-group">
+        <select name="subId">
+        <option th:each="s : ${subjects}" th:text="${s.name}" th:value="${s.id}"></option>
+        </select>
+        </div>
+        Select file to upload:
+        <br />
+     
+        <input type="file" name="file" />
+        <br />
+       
+        <br />
+        <input class="btn btn-primary" type="submit" value="Upload" />
+    </form>
+    </div>
+</div>
+</html>

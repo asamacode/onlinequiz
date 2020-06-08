@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.asama.onlinequiz.model.ResultTest;
+import com.asama.onlinequiz.model.Student;
 import com.asama.onlinequiz.repository.ResultTestRepository;
 
 @Service
@@ -38,6 +39,11 @@ public class ResultTestServiceImpl implements ResultTestService {
     @Override
     public void delete(ResultTest resultTest) {
         resultTestRepository.delete(resultTest);
+    }
+
+    @Override
+    public List<ResultTest> findAllListTestedByStudent(Student student) {
+        return resultTestRepository.findAllByStudentId(student.getId());
     }
 
 }

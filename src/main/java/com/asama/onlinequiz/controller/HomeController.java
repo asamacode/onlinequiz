@@ -50,6 +50,8 @@ public class HomeController {
         if (student != null) {
             List<Test> tests = testService.findAllListTestByStudent(student);
             model.addAttribute("tss", tests);
+        } else {
+            return "redirect:/login";
         }
         return "home/index";
     }
