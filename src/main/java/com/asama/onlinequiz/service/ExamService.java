@@ -21,7 +21,7 @@ public class ExamService {
     
     Map<Long, Question> exams = new HashMap<Long, Question>();
     
-    private final Integer PAGE_SIZE = 1;
+    private final Integer PAGE_SIZE = 5;
 
     private Integer diff, nor, easy;
 

@@ -43,6 +43,12 @@ public class HomeController {
 
     @Autowired
     HttpSession session;
+    
+    @RequestMapping("/logout")
+    public String logout() {
+        session.removeAttribute("user");
+        return "redirect:/login";
+    }
 
     @RequestMapping(value = { "/", "/home" })
     public String home(Model model) {

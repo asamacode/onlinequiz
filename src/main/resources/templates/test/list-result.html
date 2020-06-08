@@ -13,16 +13,14 @@
 
 </head>
 <div id="home-main-content">
-<div class="col" style="padding: 150px;">
-		<div class="row " align="center">
-			<div class="col-md-8 col-12"
-				style="margin-left: auto; margin-right: auto; float: none;">
+<div class="col-sm-12">
+		<div class="row">
 				<th:block th:each="t : ${tests}">
-					<div class="panel panel-success" style="margin-bottom: 10px;">
-						<div class="panel-heading">
+					<div class="col-sm-4 card p-2 m-2">
+						<div class="card-header">
 							<h3>Môn: <span th:utext="${t.test.subject.name}"></span></h3>
 						</div>
-						<div class="panel-body"></div>
+						<div class="card-body"></div>
 						<div style="margin-bottom: 5px;">
 							<label style="font-weight: bold;">Bài kiểm tra:
 								<span th:utext="${t.test.name}"></span></label>
@@ -37,13 +35,13 @@
 						<div style="margin-bottom: 5px;">
 							<label style="font-weight: bold;">Thời kết thúc:</label> <span th:utext="${t.timeEnd}"></span>
 						</div>
-						<div class="panel-footer">
-							<a th:href="@{'/ReportExam?idExam='+ ${t.id}}" class="btn btn-info"> Xem Chi Tiết Kết Quả</a>
+						<div class="card-footer">
+							<a th:href="@{'/mytest/view/'+ ${t.id}}" class="btn btn-info"> Xem Chi Tiết Kết Quả</a>
 						</div>
 					</div>
 				</th:block>
 
-			</div>
+			
 		</div>
 	</div>
 

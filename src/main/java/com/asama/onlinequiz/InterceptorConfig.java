@@ -2,6 +2,7 @@ package com.asama.onlinequiz;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.asama.onlinequiz.interceptor.LecturerInterceptor;
@@ -20,5 +21,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Autowired
     ManagerInterceptor managerInterceptor;
     
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(studentInterceptor).addPathPatterns("/dotest/**", "/mytest/**");
+        registry.addInterceptor(lecturerInterceptor).addPathPatterns("/lecturer/**");
+        registry.addInterceptor(managerInterceptor).addPathPatterns("/manager/**");
+    }
    
 }

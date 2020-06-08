@@ -19,11 +19,11 @@ public class ManagerInterceptor extends HandlerInterceptorAdapter {
         AppUser user = (AppUser) session.getAttribute("user");
         
         if (user == null) {
-            session.setAttribute("back-url", request.getRequestURI());
+//            session.setAttribute("back-url", request.getRequestURI());
             response.sendRedirect("/login?message=You need to login first !");
             return false;
         } else {
-            if (user.getRole().getName() == "MANAGER") {
+            if (user.getRole().getName().equals("MANAGER")) {
                 return true;
             } else {
                 response.sendRedirect("/login?message=You not authorized !");

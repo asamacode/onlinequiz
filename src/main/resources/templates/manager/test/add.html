@@ -49,10 +49,10 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group justify-content-center text-center">
                                                     	<div th:if="${easy != null}">
-                                                    		<input type="number" class="form-control" th:value="${easy}" name="easy" id="easy">
+                                                    		<input th:name="|qsEasy|" type="number" class="form-control" th:value="${easy}" id="easy">
                                                     	</div>
                                                     	<div th:unless="${easy != null}">
-                                                    		<input th:field="*{qsEasy}" type="number" class="form-control" value="0" name="easy" id="easy">
+                                                    		<input type="number" class="form-control" value="0" id="easy">
                                                     		<span th:if="${#fields.hasErrors('qsEasy')}" th:errors="*{qsEasy}"></span>
                                                     	</div>
                                                         <p>Dễ</p>
@@ -61,10 +61,10 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group justify-content-center text-center">
                                                     <div th:if="${normal != null}">
-                                                    	<input type="number" class="form-control" th:value="${normal}" name="normal" id="normal">
+                                                    	<input th:name="|qsNormal|" type="number" class="form-control" th:value="${normal}" id="normal">
                                                     </div>
                                                      <div th:unless="${normal != null}">
-                                                    	<input th:field="*{qsNormal}" type="number" class="form-control" value="0" name="normal" id="normal">
+                                                    	<input type="number" class="form-control" value="0" id="normal">
                                                     	<span th:if="${#fields.hasErrors('qsNormal')}" th:errors="*{qsNormal}"></span>
                                                     </div>
                                                         <p>TB</p>
@@ -73,10 +73,10 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group justify-content-center text-center">
                                                     <div th:if="${diff != null}">
-                                                    	<input type="number" class="form-control" th:value="${diff}" name="difficult" id="difficult">
+                                                    	<input th:name="|qsHard|" type="number" class="form-control" th:value="${diff}" id="difficult">
                                                     </div>
                                                          <div th:unless="${diff != null}">
-                                                    	<input th:field="*{qsHard}" type="number" class="form-control" value="0" name="difficult" id="difficult">
+                                                    	<input type="number" class="form-control" value="0" id="difficult">
                                                     	<span th:if="${#fields.hasErrors('qsHard')}" th:errors="*{qsHard}"></span>
                                                     </div>
                                                         <p>Khó</p>

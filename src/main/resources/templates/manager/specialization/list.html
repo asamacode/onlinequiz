@@ -53,6 +53,8 @@ $(document).ready(function() {
       <td>
       	<a type="button" class="btn btn-primary" th:href="@{'/manager/specialization/update/' + ${n.id}}">
       	Sửa</a>
+      	<a type="button" class="btn btn-primary" th:href="@{'/manager/test/add/' + ${n.id}}">
+      	Thêm đề thi</a>
       	<a type="button" class="btn btn-danger btn-open-dialog-sc" data-toggle="modal" data-target="#mModal">Xóa</a>
       </td>
     </tr>

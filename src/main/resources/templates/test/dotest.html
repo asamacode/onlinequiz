@@ -33,7 +33,7 @@
 							
 							
 								<div th:if="${page > 1}" class="panel-heading ">
-								<span th:utext="${'Câu '+ {(page - 1)*8+ iter.index + 1} + ':' + qs.content}"></span>
+								<span th:utext="${'Câu '+ {(page - 1)*5+ iter.index + 1} + ':' + qs.content}"></span>
 								</div>
 							
 						
@@ -105,7 +105,7 @@
 					</div>
 					<div class="row">
 						<a href="trangxemketqua.jsp" data-toggle="modal"
-								data-target="#myModal" style="color: blue">Finish attempt..</a>
+								data-target="#myModal" style="color: blue">Nộp bài </a>
 								<h4 id="timeLimit" style="color: blue;"></h4>
 						
 					</div>
@@ -122,7 +122,7 @@
 
 
 		<!-- modal -->
-		<form action="${pageContext.request.contextPath}/Submit" method="POST">
+		<form th:action="@{/dotest/submit}" method="POST">
 			<div class="modal fade" id="myModal" role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -171,7 +171,7 @@ $(document).ready(function() {
 	}
 	
 	$(".btn-all").click(function() {
-		var item_per_page = 1;
+		var item_per_page = 5;
 		var id = $(this).attr("data-id");
 		var page = Math.ceil(id/item_per_page);
 		

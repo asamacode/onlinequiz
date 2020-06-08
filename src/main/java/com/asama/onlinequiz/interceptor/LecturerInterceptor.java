@@ -19,11 +19,11 @@ public class LecturerInterceptor extends HandlerInterceptorAdapter {
         AppUser user = (AppUser) session.getAttribute("user");
         
         if (user == null) {
-            session.setAttribute("back-url", request.getRequestURI());
+//            session.setAttribute("back-url", request.getRequestURI());
             response.sendRedirect("/login?message=You need to login first !");
             return false;
         } else {
-            if (user.getRole().getName() == "LECTURER") {
+            if (user.getRole().getName().equals("LECTURER")) {
                 return true;
             } else {
                 response.sendRedirect("/login?message=You not authorized !");

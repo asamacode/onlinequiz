@@ -22,7 +22,7 @@ public class DoTestService {
     @Autowired
     TestService testService;
 
-    private final Integer PAGE_SIZE = 1;
+    private final Integer PAGE_SIZE = 5;
 
     private Long testId;
 
